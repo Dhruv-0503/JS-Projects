@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background-image: linear-gradient(-30deg, pink, rgb(218, 145, 145), rgb(240, 186, 155), rgb(226, 163, 143));
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h3 {
+            font-weight: 700;
+            font-size: 50px;
+            color: rgb(23, 36, 56);
+            margin: 20px 0;
+            animation: fadeSlideIn 1s ease-out forwards;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-gap: 10px;
+            animation: fadeSlideIn 1.2s ease-out forwards;
+        }
+        .board button {
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            border-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 60px;
+            box-shadow: 2px 3px rgb(136, 92, 92);
+            animation: buttonEntry 1.2s ease forwards;
+        }
+        .board button:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        .board button:active {
+            transform: scale(0.95);
+        }
+        @keyframes buttonEntry {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        #stgame {
+            width: 300px;
+            height: 50px;
+            border-radius: 10px;
+            font-size: 25px;
+            margin-top: 30px;
+            margin-bottom: 29px;
+            cursor: pointer;
+            background-image: linear-gradient(-20deg, rgb(168, 217, 230), skyblue);
+            color: rgb(117, 35, 35);
+            font-weight: 500;
+            animation: buttonEntry 1.2s ease forwards;
+        }
+        #stgame:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        #stgame:active {
+            transform: scale(0.95);
+        }
+        /* Message box styling */
+        #messageBox {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            padding: 25px;
+            border: 2px solid rgb(23, 36, 56);
+            border-radius: 15px;
+            font-size: 20px;
+            color: rgb(23, 36, 56);
+            display: none;
+            z-index: 100;
+            text-align: center;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+            animation: bounceIn 0.5s ease forwards;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.7) translate(-50%, -50%); opacity: 0; }
+            50% { transform: scale(1.05) translate(-50%, -50%); opacity: 1; }
+            100% { transform: scale(1) translate(-50%, -50%); }
+        }
+        #messageText {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        #messageBox button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1c3c3c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, background-color 0.2s;
+        }
+        #messageBox button:hover {
+            background-color: #356576;
+            transform: scale(1.05);
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+        }
+        /* Page load overlay styling */
+        #pageLoader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1C1C3C;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+        #loaderText {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            opacity: 0;
+            animation: textFadeIn 1s ease forwards, bounce 1.5s infinite alternate;
+        }
+        @keyframes textFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <h3>Tic Tac Toe</h3>
+    <div class="board">
+        <button name="1" onclick="markfun(0)"></button>
+        <button name="2" onclick="markfun(1)"></button>
+        <button name="3" onclick="markfun(2)"></button>
+        <button name="4" onclick="markfun(3)"></button>
+        <button name="5" onclick="markfun(4)"></button>
+        <button name="6" onclick="markfun(5)"></button>
+        <button name="7" onclick="markfun(6)"></button>
+        <button name="8" onclick="markfun(7)"></button>
+        <button name="9" onclick="markfun(8)"></button>
+    </div>
+    <button id="stgame" onclick="startgame()">Start Game</button>
+
+    <!-- Overlay and Message Box -->
+    <div id="overlay" onclick="hideMessageBox()"></div>
+    <div id="messageBox">
+        <p id="messageText"></p>
+        <button onclick="hideMessageBox()">OK</button>
+    </div>
+
+    <script>
+        let gamestatus = false;
+        let defaultlist = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
+        let templist;
+        let player = 'X';
+
+        function startgame() {
+            templist = [...defaultlist];
+            gamestatus = true;
+            player = 'X';
+            document.getElementById('stgame').style.visibility = 'hidden';
+
+            const cells = document.querySelectorAll('.board button');
+            cells.forEach(cell => cell.innerText = '');
+        }
+
+        function markfun(index) {
+            if (!gamestatus) {
+                showMessage("Please Start Game First!!");
+                return;
+            }
+            checkvalid(index);
+        }
+
+        function checkvalid(index) {
+            if (templist[index] === -1) {
+                const cell = document.getElementsByName(index + 1)[0];
+                cell.innerText = player;
+                templist[index] = player;
+                if (checkWinner()) {
+                    showMessage(`Player ${player} wins!`);
+                    resetGame();
+                    return;
+                }
+                if (isDraw()) {
+                    showMessage("It's a draw!");
+                    resetGame();
+                    return;
+                }
+                player = player === 'X' ? 'O' : 'X';
+            } else {
+                showMessage("Place Already Occupied!");
+            }
+        }
+
+        function checkWinner() {
+            const winningCombos = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return winningCombos.some(combo => 
+                templist[combo[0]] === player && 
+                templist[combo[1]] === player && 
+                templist[combo[2]] === player
+            );
+        }
+
+        function isDraw() {
+            return templist.every(cell => cell !== -1);
+        }
+
+        function showMessage(message) {
+            const messageBox = document.getElementById('messageBox');
+            const overlay = document.getElementById('overlay');
+            document.getElementById('messageText').innerText = message;
+            messageBox.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        function hideMessageBox() {
+            const messageBox = document.getElementById('messageBox');
+            const overlay = document.getElementById('overlay');
+            messageBox.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        function resetGame() {
+            gamestatus = false;
+            document.getElementById('stgame').style.visibility = 'visible';
+
+            // Clear the board
+            templist = [...defaultlist];
+            const cells = document.querySelectorAll('.board button');
+            cells.forEach(cell => cell.innerText = '');
+        }
+    </script>
+</body>
+</html>

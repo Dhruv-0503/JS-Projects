@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+        #cont{
+            margin-left: 14px;
+            width: 900px;
+            height: 500px;
+            background-color: rgb(3, 163, 83);
+            border: 10px solid rgb(0, 0, 0);
+            border-radius: 10px;
+            position: relative;
+        }
+        #ele1{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(207, 103, 34);
+            border: 3px solid rgb(139, 1, 139);
+            border-radius: 10px;
+            position: absolute;
+        }
+        #but{
+            width: 100px;
+            margin-top: 15px;
+            margin-left: 20px;
+            border: 2px solid black;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function myMove(){
+            let dir = "right";
+            let pos = 0;
+            const ele = document.getElementById("ele1");
+            const a = setInterval(frame, 2);
+            function frame(){
+                if(dir == "right" && pos == 794){
+                    pos = 1;
+                    dir = "down";
+                }
+                else if(dir == "down" && pos == 394){
+                    pos = 1;
+                    dir = "left";
+                }
+                else if(dir == "left" && pos == -798){
+                    pos = 1;
+                    dir = "up";
+                }
+                else if(dir == "up" && pos == -398){
+                    pos = 1;
+                    dir = "right";
+                }
+
+                if(dir == "right"){
+                    pos++;
+                    ele.style.left = pos + 'px';
+                }
+                else if(dir == "down"){
+                    pos++;
+                    ele.style.top = pos + 'px';
+                }
+                else if(dir == "left"){
+                    pos--;
+                    ele.style.left = (798 + pos) + 'px';
+                }
+                else{
+                    pos--;
+                    ele.style.top = (398 + pos) + 'px';
+                }
+            }
+        }     
+    </script>
+</head>
+<body>
+    <div id="cont">
+        <div id="ele1">
+
+        </div>
+    </div>
+    <input type="button" value="Hit Me!" name="Click" onclick="myMove()" id="but">
+</body>
+</html>

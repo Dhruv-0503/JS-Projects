@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Change</title>
+</head>
+
+<body style="display: flex; justify-content: center; margin-top: 200px;">
+    <form
+        style="border: 1px solid black; width: 400px; padding: 20px; color: green; font-weight: bold; font-size: 20px;">
+        <label for="name">Enter Your Name :</label>
+        <input type="text" placeholder="Name Here!!" id="name">
+        <br>
+        <br>
+        <label for="name">Enter Your Password :</label>
+        <input type="password" placeholder="Password Here!!" id="pass">
+        <br>
+        <br>
+        <input type="button" name="Login" value="Login" onclick="getinfo()"
+            style="margin-right: 30px; margin-left: 10px;">
+        <input type="button" name="show" value="Show" onclick="showinfo()">
+        <input type="button" name="changepass" value="Change Password" onclick="edit()" style="margin-left: 30px;">
+    </form>
+    <script>
+        var name = "";
+        var pass = "";
+
+        function getinfo() {
+            name = document.getElementById("name").value;
+            pass = document.getElementById("pass").value;
+            document.getElementById("name").value = "";
+            document.getElementById("pass").value = "";
+
+        }
+
+        function showinfo() {
+            alert("Hello " + name + " & Your Password is : " + pass);
+        }
+
+        function edit() {
+            let oldpass = prompt("Enter old Password :");
+            if (oldpass == pass) {
+                pass = prompt("Enter New Password :")
+                alert("Password Changed Successfully!!")
+            }
+            else {
+                alert("Wrong Password !!");
+            }
+        }
+    </script>
+</body>
+
+</html>

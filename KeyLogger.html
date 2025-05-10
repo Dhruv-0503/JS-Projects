@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Logger</title>
+</head>
+<body>
+    <div class="container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; border: 5px solid black; margin: 80px 0px 0px 125px; padding: 30px; width: fit-content;">
+        <div>
+            <h1 style="border: 3px solid black; border-radius: 10px; width: 300px;height: 80px; font-size: 40px; display: flex; justify-content: center; align-items: center; padding: 2px; background-color: rgb(236, 203, 159);">Key Logger</h1>
+            <p style="font-size: 25px; font-weight: bold;">Welcome To My First Project</p>
+        </div>
+        <div>
+            <button id="startbtn" style="width: 300px; padding: 2px; border: 2px solid black; border-radius: 10px; height: 70px; font-size: 30px; margin-right: 10px; background-image: linear-gradient(rgb(255, 148, 60), rgb(219, 45, 153)); color: white; cursor: pointer;">Start Key Logger</button>
+            <button id="stopbtn" style="width: 300px; padding: 2px; border: 2px solid black; border-radius: 10px; height: 70px; font-size: 30px;  background-image: linear-gradient(rgb(255, 148, 60), rgb(219, 45, 153)); color: white; cursor: pointer;">Stop Key Logger</button>
+        </div>
+        <div style="margin-top: 20px; display: flex; flex-direction: row;">
+            <div id="logdiv" style="width: 500px; height: 80px; background-color: bisque; margin-right: 20px; border: 2px solid black; border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; color: black;">
+
+            </div>
+            <div id="statusdiv" style="width: 500px; height: 80px; background-color: rgb(245, 165, 67); border: 2px solid black; border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; color: black;">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const log = document.getElementById("logdiv");
+        const status = document.getElementById("statusdiv");
+        const stbtn = document.getElementById("startbtn");
+        const spbtn = document.getElementById("stopbtn");
+
+        stbtn.addEventListener("click" , ()=>{
+            document.addEventListener("keydown" , handledown);
+            document.addEventListener("keyup" , handleup);
+        });
+        spbtn.addEventListener("click" , ()=>{
+            document.addEventListener("keydown" , handledown);
+            document.addEventListener("keyup" , handleup);
+            log.textContent = "";
+            status.textContent = "";
+        });
+
+        function handledown(e){
+            log.textContent = "key " + e.key;
+            status.textContent = "Down";
+        }
+        function handleup(e){
+            log.textContent = "key " + e.key;
+            status.textContent = "Up";
+        }
+        
+    </script>
+</body>
+</html>

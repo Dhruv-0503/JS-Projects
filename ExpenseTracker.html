@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        * {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .Expense-container {
+            margin-top: 20px;
+            width: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 20px;
+            gap: 20px;
+            padding: 0px 0px 10px 0px;
+        }
+        p {
+            font-size: 50px;
+            font-weight: 500;
+            color: coral;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            width: 80%;
+        }
+        input {
+            height: 35px;
+            font-weight: 500;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding-left: 10px;
+            font-size: 20px;
+        }
+        button {
+            height: 40px;
+            font-size: 20px;
+            font-weight: 900;
+            border: 2px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+            background-image: linear-gradient(-45deg, pink , rgb(255, 145, 163));
+        }
+        .Table-container {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        table {
+            border: 2px solid black;
+            font-size: 20px;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Expense-container">
+        <p>Expense Tracker</p>
+        <form onsubmit="addexpense(event)">
+            <input type="text" placeholder="Expense Description" id="exp-dis">
+            <input type="text" placeholder="Expense Category" id="exp-cat">
+            <input type="number" name="Expense-Cost" id="exp-cost" placeholder="Expense Amount">
+            <button type="submit">Add Expense</button>
+        </form>
+        <div class="Table-container">
+            <table id="exp-tab">
+                <tr>
+                    <th>Expense Description</th>
+                    <th>Expense Category</th>
+                    <th>Expense Cost</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        function addexpense(event) {
+            event.preventDefault();  // Prevents form submission
+
+            let exp_dis = document.getElementById("exp-dis").value;
+            let exp_cat = document.getElementById("exp-cat").value;
+            let exp_cost = document.getElementById("exp-cost").value;
+
+            const expensetable = document.getElementById("exp-tab");
+
+            // Add a new row
+            const newRow = expensetable.insertRow();
+            newRow.innerHTML = `<td>${exp_dis}</td><td>${exp_cat}</td><td>${exp_cost}</td>`;
+
+            // Clear the input fields
+            document.getElementById("exp-dis").value = '';
+            document.getElementById("exp-cat").value = '';
+            document.getElementById("exp-cost").value = '';
+        }
+    </script>
+</body>
+</html>
